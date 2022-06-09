@@ -73,4 +73,8 @@ public class Agencia
             contas.stream().forEach(c -> c.descontarTaxaManutencao(taxa));
         }
     }
+    
+    public void renderPoupancas(double porcentagem) {
+        contas.stream().forEach(c -> c.render(porcentagem));
+    }
 }

@@ -106,4 +106,10 @@ public class Conta
             this.registros.add(new Registro("taxa de manuntencao", -1 * taxa));
         }
     }
+    
+    public void render(double porcentagem) {
+        if (tipo.equals("poupanca")) {
+            saldo += porcentagem * saldo;
+        }
+    }
 }
