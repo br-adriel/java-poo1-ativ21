@@ -99,4 +99,11 @@ public class Conta
         List<Registro> lista = registros.stream().filter(r -> r.getData().isAfter(limite)).collect(Collectors.toList());
         return new ArrayList<Registro>(lista);
     }
+    
+    public void descontarTaxaManutencao(double taxa) {
+        if (taxa > 0) {
+            this.saldo -= taxa;
+            this.registros.add(new Registro("taxa de manuntencao", -1 * taxa));
+        }
+    }
 }

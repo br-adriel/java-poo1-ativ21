@@ -67,4 +67,10 @@ public class Agencia
         Conta c = pesquisarConta(conta);
         c.depositar(valor);
     }
+    
+    public void descontarTaxaManutencao(double taxa) {
+        if (taxa > 0) {
+            contas.stream().forEach(c -> c.descontarTaxaManutencao(taxa));
+        }
+    }
 }
