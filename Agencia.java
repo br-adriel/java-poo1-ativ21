@@ -37,4 +37,29 @@ public class Agencia
     public double saldoTotal() {
         return contas.stream().mapToDouble(c -> c.getSaldo()).sum();
     }
+    
+    public Conta pesquisarConta(String codigoConta) {
+        return contas.stream().filter(c -> c.getCodigo().equals(codigoConta)).findFirst().get();
+    }
+    
+    public boolean sacar(String conta, double valor) {
+        Conta c = pesquisarConta(conta);
+        return c.sacar(valor);
+    }
+    
+    public double verSaldo(String conta) {
+        Conta c = pesquisarConta(conta);
+        return c.getSaldo();
+    }
+    
+    public void transferir(String origem, String destino, double valor) {
+        Conta or = pesquisarConta(origem);
+        Conta de = pesquisarConta(destino);
+        or.transferir(valor, de);
+    }
+    
+    public void depositar(String conta, double valor) {
+        Conta c = pesquisarConta(conta);
+        c.depositar(valor);
+    }
 }
