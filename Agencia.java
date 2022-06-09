@@ -10,6 +10,11 @@ public class Agencia
     private String codigo;
     private ArrayList<Conta> contas;
     
+    public Agencia(String codigo) {
+        this.codigo = codigo;
+        this.contas = new ArrayList<Conta>();
+    }
+    
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
