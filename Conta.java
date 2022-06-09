@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.stream.*;
+import java.util.List;
 
 /**
  * @author Adriel Faria dos Santos
@@ -9,18 +13,22 @@ public class Conta
     private String tipo;
     private double saldo;
     private double limite;
+    private ArrayList<Registro> registros;
     
     public Conta() {
         this.saldo = 0;
+        registros = new ArrayList<Registro>();
     }
     
     public Conta(double saldo) {
         this.saldo = saldo;
+        registros = new ArrayList<Registro>();
     }
     
     public Conta(double saldo, double limite) {
         this.saldo = saldo;
         this.limite = limite;
+        registros = new ArrayList<Registro>();
     }
     
     public Conta(String codigo, String tipo, double saldo, double limite) {
@@ -28,6 +36,7 @@ public class Conta
         this.tipo = tipo;
         this.saldo = saldo;
         this.limite = limite;
+        registros = new ArrayList<Registro>();
     }
     
     public String getCodigo() {
@@ -61,8 +70,8 @@ public class Conta
     public boolean sacar(double valor) {
         if (valor < 0) return false;
         if (valor > saldo + limite) return false;
-        
         saldo -= valor;
+        registros.add(new Registro("saque", -1 * valor));
         return true;
     }
     
@@ -72,12 +81,22 @@ public class Conta
     
     public void depositar(double valor) {
         saldo += valor;
+        registros.add(new Registro("deposito", valor));
     }
     
      public void transferir(double valor, Conta c) {
         if (valor > 0 && valor <= saldo + limite) {
             this.saldo -= valor;
             c.saldo += valor;
+            this.registros.add(new Registro("transferencia", -1 * valor));
+            c.registros.add(new Registro("transferencia", valor));
         }
+    }
+    
+    public ArrayList<Registro> extrato(int dias) {
+        LocalDateTime limite = LocalDateTime.now().minusDays(dias);
+        
+        List<Registro> lista = registros.stream().filter(r -> r.getData().isAfter(limite)).collect(Collectors.toList());
+        return new ArrayList<Registro>(lista);
     }
 }
