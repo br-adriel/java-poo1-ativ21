@@ -74,7 +74,13 @@ public class Agencia
         }
     }
     
-    public void renderPoupancas(double porcentagem) {
-        contas.stream().forEach(c -> c.render(porcentagem));
+    public void renderContasPoupanca(double porcentagem) {
+        contas.stream().forEach(c -> {if (c.getTipo().equals("poupanca")) c.render(porcentagem);});
     }
+    
+    public void renderContasCorrente(double porcentagem) {
+        contas.stream().forEach(c -> {if (c.getTipo().equals("corrente")) c.render(porcentagem);});
+    }
+    
+    
 }

@@ -108,8 +108,6 @@ public class Conta
     }
     
     public void render(double porcentagem) {
-        if (tipo.equals("poupanca")) {
-            saldo += porcentagem * saldo;
-        }
+        saldo += porcentagem * saldo;
     }
 }
