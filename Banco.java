@@ -52,4 +52,8 @@ public class Banco
     public double saldoTotal() {
         return agencias.stream().mapToDouble(a -> a.saldoTotal()).sum();
     }
+    
+    public void renderContasPoupanca(double porcentagem) {
+        agencias.stream().forEach(a -> a.renderContasPoupanca(porcentagem));
+    }
 }
