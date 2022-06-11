@@ -14,29 +14,31 @@ public class Conta
     private double saldo;
     private double limite;
     private ArrayList<Registro> registros;
+    private LocalDateTime ultimaManutencao;
     
     public Conta() {
         this.saldo = 0;
         registros = new ArrayList<Registro>();
+        ultimaManutencao = LocalDateTime.of(2000, 1, 1, 12, 0, 0, 0);
     }
     
     public Conta(double saldo) {
+        this();
         this.saldo = saldo;
-        registros = new ArrayList<Registro>();
     }
     
     public Conta(double saldo, double limite) {
+        this();
         this.saldo = saldo;
         this.limite = limite;
-        registros = new ArrayList<Registro>();
     }
     
     public Conta(String codigo, String tipo, double saldo, double limite) {
+        this();
         this.codigo = codigo;
         this.tipo = tipo;
         this.saldo = saldo;
         this.limite = limite;
-        registros = new ArrayList<Registro>();
     }
     
     public String getCodigo() {
@@ -101,9 +103,12 @@ public class Conta
     }
     
     public void descontarTaxaManutencao(double taxa) {
-        if (taxa > 0) {
+        boolean proibidoDescontar = ultimaManutencao.getMonth().equals(LocalDateTime.now().getMonth());
+        proibidoDescontar = proibidoDescontar && ultimaManutencao.getYear() == LocalDateTime.now().getYear();
+        if (taxa > 0 && !proibidoDescontar) {
             this.saldo -= taxa;
             this.registros.add(new Registro("taxa de manuntencao", -1 * taxa));
+            ultimaManutencao = LocalDateTime.now();
         }
     }
     
